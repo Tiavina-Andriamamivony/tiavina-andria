@@ -15,7 +15,7 @@ const projects = [
     description: "AI Productivity Tool — Designed and developed an AI-powered web application that transforms raw notes into structured knowledge. Created a minimalist UI/UX optimized for fast idea capture and readability. Implemented AI features including summarization, rewriting, and structured content generation.",
     tags: ["Next.js", "AI", "Vercel", "UI/UX"],
     year: "2025",
-    image: "/maeri.png",
+    image: "/image.png",
     subtitle: "MA-ERI Consulting",
   },
 ];
