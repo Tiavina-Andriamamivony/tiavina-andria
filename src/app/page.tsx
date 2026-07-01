@@ -9,6 +9,8 @@ const projects = [
     year: "2025",
     image: "/unFaked.png",
     badge: "2nd Place — DevFest 2025",
+    link: "https://un-faked-preprod.vercel.app/",
+    github: "https://github.com/Tiavina-Andriamamivony/UnFaked"
   },
   {
     title: "NeuraNote",
@@ -17,6 +19,28 @@ const projects = [
     year: "2025",
     image: "/image.png",
     subtitle: "MA-ERI Consulting",
+    link: "https://neura-note.vercel.app/",
+    github: "https://github.com/Tiavina-Andriamamivony/NeuraNote"
+  },
+  {
+    title: "Face-Me",
+    description: "AI Facial Recognition Tool — Designed and developed a web application that uses AI to recognize and analyze facial features. Created an intuitive UI/UX for easy user interaction. Implemented AI algorithms for accurate facial detection and analysis.",
+    tags: ["Next.js", "TensorFlow"],
+    year: "2025",
+    image: "/face_me.png",
+    subtitle: "Face-Me Project",
+    link: "https://face-me-dusky.vercel.app/",
+    github: "https://github.com/Tiavina-Andriamamivony/face-me"
+  },
+  {
+    title: "Ilona",
+    description: "AI-Powered Personal Assistant — Designed and developed a web application that uses AI to assist users with daily tasks. Created a user-friendly UI/UX for seamless interaction. Implemented AI algorithms for natural language processing and task management.",
+    tags: ["Next.js", "ElevenLabs"],
+    year: "2025",
+    image: "/ilona.png",
+    subtitle: "Ilona Project",
+    link: "https://ilona-perfect-call-agent.vercel.app/",
+    github: "https://github.com/Tiavina-Andriamamivony/Ilona-perfect-call-agent"
   },
 ];
 
@@ -55,7 +79,7 @@ const navLinks = [
   { label: "Work", href: "#projects" },
   { label: "About", href: "#about" },
   { label: "And?", href: "#and" },
-  { label: "Resume", href: "/cv Tiavintsoa andriamamivony.pdf" },
+  { label: "Resume", href: "/tiavina_resume.pdf" },
 ];
 
 function GithubIcon({ className }: { className?: string }) {
@@ -204,7 +228,30 @@ export default function Home() {
               <div className="p-6">
                 <div className="mb-1 flex items-center justify-between">
                   <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
-                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                  <div className="flex items-center gap-3">
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        aria-label={`${project.title} GitHub repository`}
+                      >
+                        <GithubIcon className="h-4 w-4" />
+                      </a>
+                    )}
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground transition-colors hover:text-foreground"
+                        aria-label={`Visit ${project.title}`}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
                 </div>
                 {project.subtitle && (
                   <p className="mb-3 text-sm font-medium text-accent">{project.subtitle}</p>
