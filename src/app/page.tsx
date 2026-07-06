@@ -77,16 +77,16 @@ const experience = [
     stack: "Java · Spring Boot · PostgreSQL · AWS · Docker",
     notes: [
       {
-        head: "Disaster recovery for Vola",
-        body: "Vola runs a daily cron that scrapes Orange Money and reconciles tuition payments. When it goes down, that day is never replayed. Built an idempotent recovery endpoint that re-runs verification for any chosen date via upserts — killing the manual, by-hand reconciliation on the admin account.",
+        head: "Disaster recovery",
+        body: "A production payment platform runs a daily cron reconciling mobile money transactions against tuition records. When the job fails, that day's data is permanently lost. Built an idempotent recovery endpoint that re-runs the full verification pipeline for any chosen date via atomic upserts — eliminating the manual reconciliation process previously handled by hand.",
       },
       {
-        head: "Vola × HEI ADMIN integration",
-        body: "Delegated all tuition-payment verification to Vola. Generated a typed client from Vola's OpenAPI spec, wrote a clean domain-mapping layer between the two systems, and moved the verification trigger upstream so a student's fees always reflect real payment state.",
+        head: "Platform × Institution integration",
+        body: "Delegated all tuition-payment verification from the institution's information system to the payment platform. Generated a strongly-typed API client from a contract-first specification, wrote a clean domain-mapping layer between the two systems, and moved the verification trigger upstream — ensuring a student's fee status always reflects real payment state.",
       },
       {
         head: "How it shipped",
-        body: "Production codebase under TDD with coverage, CI/CD, Docker and real code review. Single-responsibility services, granular error handling, errors surfaced in Sentry.",
+        body: "Production codebase under TDD with coverage targets, CI/CD pipeline, Docker and structured code review. Single-responsibility services, granular error handling, and errors surfaced in a real-time monitoring platform.",
       },
     ],
   },
@@ -135,7 +135,7 @@ const navLinks = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#dossier" },
   { label: "Beyond", href: "#beyond" },
-  { label: "Résumé", href: "/tiavina_resume.pdf" },
+  { label: "Resume", href: "/tiavina_resume.pdf" },
 ];
 
 function GithubIcon({ className }: { className?: string }) {
