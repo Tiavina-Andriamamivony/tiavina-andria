@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Tiavintsoa Andriamamivony — Full Stack Developer",
-  description: "Portfolio of Tiavintsoa Andriamamivony, passionate full stack developer based in Madagascar. React, Next.js, TypeScript, Node.js, Spring Boot.",
+  title: "Tiavintsoa Andriamamivony — Backend & Full-Stack Engineer",
+  description:
+    "Backend and full-stack engineer in Madagascar. Ships production payment infrastructure in Java/Spring Boot and builds AI-powered web apps. Best team in Madagascar — picoCTF 2026 (CMU Africa).",
 };
 
 export default function RootLayout({
@@ -24,11 +14,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@300..900&family=Caveat:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600&family=Bodoni+Moda:ital,wght@0,400;0,500;1,400;1,500&family=Spline+Sans+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="grain antialiased">{children}</body>
     </html>
   );
 }

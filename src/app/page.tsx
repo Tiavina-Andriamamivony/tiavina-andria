@@ -1,85 +1,141 @@
 import Image from "next/image";
-import { Mail, MapPin, ExternalLink, ArrowUpRight, ChevronDown, Phone, Trophy } from "lucide-react";
+import { Mail, MapPin, ArrowUpRight, ChevronDown, Phone, Trophy, ExternalLink } from "lucide-react";
+import { RetroGrid } from "@/components/ui/retro-grid";
+import { KineticText } from "@/components/ui/kinetic-text";
+import { Marquee } from "@/components/ui/marquee";
 
 const projects = [
   {
+    index: "01",
     title: "UnFaked",
-    description: "Deepfake Detection SaaS — Designed the UI/UX and contributed to the development of a platform detecting deepfake media. Integrated Google Fact Check API for misinformation verification. Awarded 2nd place at DevFest Hackathon 2025 (Axian University).",
-    tags: ["React", "AI", "Google API", "UI/UX"],
+    description:
+      "Misinformation-detection platform. Wired the Google Fact Check API for real-time claim verification and ran on-device image analysis (TensorFlow + COCO) to flag manipulated media. Shipped the full flow, from capture to verdict.",
+    tags: ["Next.js", "TensorFlow", "Computer Vision", "Google API"],
     year: "2025",
     image: "/unFaked.png",
-    badge: "2nd Place — DevFest 2025",
+    badge: "2nd — DevFest '25",
     link: "https://un-faked-preprod.vercel.app/",
-    github: "https://github.com/Tiavina-Andriamamivony/UnFaked"
+    github: "https://github.com/Tiavina-Andriamamivony/UnFaked",
   },
   {
+    index: "02",
     title: "NeuraNote",
-    description: "AI Productivity Tool — Designed and developed an AI-powered web application that transforms raw notes into structured knowledge. Created a minimalist UI/UX optimized for fast idea capture and readability. Implemented AI features including summarization, rewriting, and structured content generation.",
-    tags: ["Next.js", "AI", "Vercel", "UI/UX"],
+    description:
+      "AI notebook that turns raw, messy notes into structured knowledge — summarize, rewrite, restructure. Built the model plumbing and a deliberately minimal capture-first interface.",
+    tags: ["Next.js", "AI", "Vercel"],
     year: "2025",
     image: "/image.png",
-    subtitle: "MA-ERI Consulting",
     link: "https://neura-note.vercel.app/",
-    github: "https://github.com/Tiavina-Andriamamivony/NeuraNote"
+    github: "https://github.com/Tiavina-Andriamamivony/NeuraNote",
   },
   {
+    index: "03",
+    title: "Ilona",
+    description:
+      "Voice-first call-center agent. Speech synthesis over multi-turn conversation flows so the assistant handles customer interactions end to end, not just single prompts.",
+    tags: ["Next.js", "ElevenLabs", "AI Agents"],
+    year: "2025",
+    image: "/ilona.png",
+    subtitle: "AI Call Agent",
+    link: "https://ilona-perfect-call-agent.vercel.app/",
+    github: "https://github.com/Tiavina-Andriamamivony/Ilona-perfect-call-agent",
+  },
+  {
+    index: "04",
     title: "Face-Me",
-    description: "AI Facial Recognition Tool — Designed and developed a web application that uses AI to recognize and analyze facial features. Created an intuitive UI/UX for easy user interaction. Implemented AI algorithms for accurate facial detection and analysis.",
+    description:
+      "Facial-recognition tool running detection and feature analysis directly in the browser, behind a UI that stays out of the way. TensorFlow in the client, no round-trip to a server.",
     tags: ["Next.js", "TensorFlow"],
     year: "2025",
     image: "/face_me.png",
-    subtitle: "Face-Me Project",
+    subtitle: "Computer Vision",
     link: "https://face-me-dusky.vercel.app/",
-    github: "https://github.com/Tiavina-Andriamamivony/face-me"
-  },
-  {
-    title: "Ilona",
-    description: "AI-Powered Personal Assistant — Designed and developed a web application that uses AI to assist users with daily tasks. Created a user-friendly UI/UX for seamless interaction. Implemented AI algorithms for natural language processing and task management.",
-    tags: ["Next.js", "ElevenLabs"],
-    year: "2025",
-    image: "/ilona.png",
-    subtitle: "Ilona Project",
-    link: "https://ilona-perfect-call-agent.vercel.app/",
-    github: "https://github.com/Tiavina-Andriamamivony/Ilona-perfect-call-agent"
+    github: "https://github.com/Tiavina-Andriamamivony/face-me",
   },
 ];
 
+const ticker = [
+  "Java", "Spring Boot", "PostgreSQL", "TypeScript", "Next.js", "React",
+  "Docker", "AWS", "Flyway", "JPA / Hibernate", "REST", "OpenAPI", "TDD",
+  "CI/CD", "Prisma", "TailwindCSS", "TensorFlow", "ElevenLabs", "Linux",
+];
+
 const skills = {
-  "Languages": ["JavaScript", "TypeScript", "Python","Java"],
-  "Frameworks": ["React", "Next.js", "Express.js", "Spring Boot"],
-  "Design": ["Figma", "Shadcn UI", "UI/UX Prototyping","Canva"],
-  "Tools": ["Git", "TailwindCSS", "Prisma", "PostgreSQL","Docker","Apache Airflow"],
-  "AI": ["OpenAI", "Ollama", "ElevenLabs", "TensorFlow"],
+  Languages: ["Java", "TypeScript", "JavaScript", "SQL", "Python"],
+  Backend: ["Spring Boot", "Node.js", "Express.js", "REST APIs", "OpenAPI"],
+  Frontend: ["React", "Next.js", "TailwindCSS", "Shadcn UI"],
+  Data: ["PostgreSQL", "JPA / Hibernate", "Flyway", "Prisma"],
+  Practices: ["TDD", "CI/CD", "Docker", "Code Review", "Git"],
+  "AI / CV": ["TensorFlow", "Computer Vision", "Ollama", "ElevenLabs"],
 };
 
 const experience = [
   {
-    role: "Full Stack Developer Intern",
-    company: "Numer",
-    period: "Sep 2025 – Mar 2026",
-    bullets: [
-      "Developed a digital donation platform for students using modern web technologies.",
-      "Built user interfaces with Spring Thymeleaf, focusing on usability and clean design.",
-      "Designed and implemented APIs for platform functionality.",
+    role: "Backend Developer — Apprenticeship",
+    company: "Numer Madagascar",
+    period: "Sep 2025 — Apr 2026",
+    stack: "Java · Spring Boot · PostgreSQL · AWS · Docker",
+    notes: [
+      {
+        head: "Disaster recovery for Vola",
+        body: "Vola runs a daily cron that scrapes Orange Money and reconciles tuition payments. When it goes down, that day is never replayed. Built an idempotent recovery endpoint that re-runs verification for any chosen date via upserts — killing the manual, by-hand reconciliation on the admin account.",
+      },
+      {
+        head: "Vola × HEI ADMIN integration",
+        body: "Delegated all tuition-payment verification to Vola. Generated a typed client from Vola's OpenAPI spec, wrote a clean domain-mapping layer between the two systems, and moved the verification trigger upstream so a student's fees always reflect real payment state.",
+      },
+      {
+        head: "How it shipped",
+        body: "Production codebase under TDD with coverage, CI/CD, Docker and real code review. Single-responsibility services, granular error handling, errors surfaced in Sentry.",
+      },
     ],
   },
   {
-    role: "Developer & Designer",
+    role: "Full-Stack Developer — Consultant",
     company: "MA-ERI Consulting",
-    period: "Volunteer",
-    bullets: [
-      "Designed and developed websites and digital tools for Malagasy businesses.",
-      "Created marketing visuals, UI mockups, and user-centered interfaces.",
-      "Participated in data analysis and digital transformation initiatives.",
+    period: "Mar 2025 — Present",
+    stack: "Next.js · Resend · Vercel",
+    notes: [
+      {
+        head: "Company site + growth plumbing",
+        body: "Built and deployed the official site with Google indexing, and wired Resend to automate quotation-request workflows.",
+      },
+      {
+        head: "Internal tools",
+        body: "Shipped internal web tools supporting business productivity and digital visibility.",
+      },
     ],
   },
 ];
 
+const achievements = [
+  {
+    title: "Best Team in Madagascar",
+    event: "picoCTF 2026 · Carnegie Mellon University Africa",
+    href: "/madagascar-best-team.pdf",
+    featured: true,
+  },
+  {
+    title: "2nd Place — DevFest Hackathon 2025",
+    event: "UnFaked · AI misinformation detection · Google Developer Group",
+  },
+  {
+    title: "2nd Place — HEI Hackathon",
+    event: "Skill AI · AI learning platform · Solo build",
+  },
+];
+
+const education = [
+  { school: "HEI Madagascar", detail: "Licence 3 — Software Ecosystem", years: "2025–2026", current: true, sub: "B.S. Computer Science · Graduating June 2027" },
+  { school: "HEI Madagascar", detail: "Licence 2 — Software Ecosystem", years: "2024–2025" },
+  { school: "HEI Madagascar", detail: "Licence 1 — Computer Science", years: "2023–2024" },
+];
+
 const navLinks = [
-  { label: "Work", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "And?", href: "#and" },
-  { label: "Resume", href: "/tiavina_resume.pdf" },
+  { label: "Work", href: "#work" },
+  { label: "About", href: "#dossier" },
+  { label: "Beyond", href: "#beyond" },
+  { label: "Résumé", href: "/tiavina_resume.pdf" },
 ];
 
 function GithubIcon({ className }: { className?: string }) {
@@ -101,18 +157,18 @@ function LinkedinIcon({ className }: { className?: string }) {
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Navigation */}
-      <nav className="nav-glass fixed top-0 left-0 right-0 z-50">
+      {/* ── Nav ─────────────────────────────────── */}
+      <nav className="nav-glass fixed inset-x-0 top-0 z-50">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#">
-            <Image src="/logo.png" alt="YUTA" width={40} height={40} className="h-8 w-8 object-contain" />
+          <a href="#" className="flex items-center gap-3">
+            <span className="font-mono text-sm font-medium tracking-tight">T.ANDRIAMAMIVONY</span>
           </a>
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="nav-link text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="nav-link font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground"
               >
                 {link.label}
               </a>
@@ -121,144 +177,150 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero-gradient noise-bg relative flex min-h-screen flex-col items-center justify-center px-6 pt-20">
-        <div className="relative z-10 flex max-w-3xl flex-col items-center text-center">
-          <div className="avatar-ring mb-8 rounded-full animate-fade-up" style={{ animationDelay: "0s" }}>
+      {/* ── Hero ────────────────────────────────── */}
+      <section className="hero-vignette dotgrid relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-24">
+        <RetroGrid
+          className="!absolute inset-0 z-0 [mask-image:linear-gradient(to_top,black_10%,transparent_75%)]"
+          angle={72}
+          cellSize={52}
+          opacity={0.5}
+          darkLineColor="#8f240d"
+          lightLineColor="#8f240d"
+        />
+
+        <div className="relative z-10 flex w-full max-w-4xl flex-col items-center text-center">
+          <div className="animate-fade-up mb-8 flex items-center gap-3 rounded-full border border-border bg-surface/60 px-4 py-1.5 backdrop-blur" style={{ animationDelay: "0s" }}>
+            <Image src="/tava.png" alt="Tiavintsoa Andriamamivony" width={28} height={28} className="h-7 w-7 rounded-full object-cover" priority />
+            <span className="font-mono text-xs tracking-wide text-muted-foreground">
+              Antananarivo, MG — available for work
+            </span>
+          </div>
+
+          <div className="animate-fade-up mb-8" style={{ animationDelay: "0.08s" }}>
             <Image
-              src="/tava.png"
+              src="/titi.png"
               alt="Tiavintsoa Andriamamivony"
-              width={112}
-              height={112}
-              className="h-28 w-28 rounded-full object-cover"
+              width={200}
+              height={200}
+              className="mx-auto h-44 w-44 rounded-2xl object-cover shadow-lg ring-2 ring-accent/10 sm:h-52 sm:w-52"
               priority
             />
           </div>
 
-          <p className="animate-fade-up mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground" style={{ animationDelay: "0.1s" }}>
-            Full Stack Developer · UI/UX Designer · AI Integration
+          <p className="animate-fade-up mono-label mb-6" style={{ animationDelay: "0.1s" }}>
+            Backend Engineer / Full-Stack / AI Integration
           </p>
 
-          <h1 className="animate-fade-up text-5xl font-bold leading-tight tracking-tight sm:text-7xl" style={{ animationDelay: "0.2s" }}>
-            Tiavintsoa
-            <br />
-            <span className="font-serif italic font-normal text-muted-foreground">Andriamamivony</span>
+          <KineticText
+            as="h1"
+            text="Tiavintsoa"
+            className="animate-fade-up justify-center text-6xl font-display font-medium leading-[0.92] tracking-tight sm:text-8xl"
+            style={{ animationDelay: "0.18s" }}
+          />
+          <h1 className="animate-fade-up -mt-1 font-serif text-6xl italic text-muted-foreground sm:text-8xl" style={{ animationDelay: "0.24s" }}>
+            Andriamamivony
           </h1>
 
-          <p className="animate-fade-up mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground" style={{ animationDelay: "0.35s" }}>
+          <p className="animate-fade-up mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground" style={{ animationDelay: "0.4s" }}>
             Creative full stack developer combining engineering with design thinking to craft intuitive experiences and polished interfaces.
           </p>
 
-          <div className="animate-fade-up mt-4 inline-flex items-center gap-2 rounded-full bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-800" style={{ animationDelay: "0.4s" }}>
-            <Trophy className="h-3.5 w-3.5" />
-            2nd Place — DevFest Hackathon 2025
+          <div className="animate-fade-up mt-8 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: "0.5s" }}>
+            <a href="/madagascar-best-team.pdf" target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 rounded-md border border-accent/40 bg-accent-soft px-4 py-1.5 font-mono text-xs text-accent transition-colors hover:bg-accent/15">
+              <Trophy className="h-3.5 w-3.5" />
+              Best Team in Madagascar — picoCTF 2026
+              <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <span className="inline-flex items-center gap-2 rounded-md border border-border bg-surface/60 px-4 py-1.5 font-mono text-xs text-muted-foreground">
+              <Trophy className="h-3.5 w-3.5" />
+              2× Hackathon Runner-Up
+            </span>
           </div>
 
-          <div className="animate-fade-up mt-8 flex items-center gap-4" style={{ animationDelay: "0.45s" }}>
-            <a
-              href="mailto:tiavina.andriamamivony.pro@gmail.com"
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-all hover:scale-[1.02] hover:shadow-lg"
-            >
+          <div className="animate-fade-up mt-9 flex items-center gap-4" style={{ animationDelay: "0.6s" }}>
+            <a href="mailto:tiavina.andriamamivony.pro@gmail.com" className="inline-flex h-11 items-center gap-2 rounded-md bg-accent px-6 text-sm font-medium text-background transition-transform hover:scale-[1.03]">
               <Mail className="h-4 w-4" />
-              Contact
+              Get in touch
             </a>
-            <a
-              href="#projects"
-              className="inline-flex h-11 items-center gap-2 rounded-full border border-border px-6 text-sm font-medium transition-all hover:bg-surface-hover"
-            >
-              View my work
+            <a href="#work" className="inline-flex h-11 items-center gap-2 rounded-md border border-border px-6 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent">
+              See the work
               <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           </div>
-
-          <div className="animate-fade-up mt-6 flex items-center gap-6 text-sm text-muted-foreground" style={{ animationDelay: "0.55s" }}>
-            <span className="flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5" />
-              Antananarivo, Madagascar
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Phone className="h-3.5 w-3.5" />
-              +261 32 64 197 54
-            </span>
-          </div>
         </div>
 
-        <a href="#projects" className="absolute bottom-10 animate-bounce text-muted-foreground">
+        <a href="#work" className="absolute bottom-8 z-10 animate-bounce text-muted-foreground/60">
           <ChevronDown className="h-5 w-5" />
         </a>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-16 flex items-end justify-between">
+      {/* ── Tech ticker ─────────────────────────── */}
+      <div className="relative border-y border-border bg-surface/40 py-4">
+        <Marquee className="[--duration:38s]" pauseOnHover>
+          {ticker.map((t) => (
+            <span key={t} className="mx-4 flex items-center gap-4 font-mono text-sm text-muted-foreground">
+              {t} <span className="text-accent/60">/</span>
+            </span>
+          ))}
+        </Marquee>
+      </div>
+
+      {/* ── Selected Work ───────────────────────── */}
+      <section id="work" className="mx-auto max-w-6xl px-6 py-28">
+        <div className="mb-14 flex items-end justify-between border-b border-border pb-6">
           <div>
-            <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Portfolio</p>
-            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Selected <span className="font-serif italic font-normal text-muted-foreground">projects</span>
+            <p className="mono-label mb-3">§ 01 — Selected Work</p>
+            <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
+              Things I&apos;ve <span className="font-serif italic font-normal text-accent">shipped</span>
             </h2>
           </div>
-          <p className="hidden text-sm text-muted-foreground sm:block">{projects.length} projects</p>
+          <p className="hidden font-mono text-xs text-muted-foreground sm:block">{String(projects.length).padStart(2, "0")} projects</p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2">
           {projects.map((project) => (
-            <article
-              key={project.title}
-              className="project-card group cursor-pointer overflow-hidden rounded-2xl border border-border bg-surface"
-            >
+            <article key={project.title} className="project-card group overflow-hidden rounded-xl border border-border bg-surface">
               <div className="relative overflow-hidden">
                 <Image
                   src={project.image}
                   alt={project.title}
                   width={600}
                   height={340}
-                  className="h-64 w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="h-60 w-full object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
                 />
-                <div className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-xs font-medium text-foreground backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+                <span className="absolute right-4 top-4 rounded-md bg-background/70 px-2.5 py-1 font-mono text-xs text-muted-foreground backdrop-blur">
                   {project.year}
-                </div>
+                </span>
                 {project.badge && (
-                  <div className="absolute left-4 top-4 flex items-center gap-1 rounded-full bg-amber-100/90 px-2.5 py-1 text-xs font-medium text-amber-800 backdrop-blur-sm">
+                  <span className="absolute left-4 top-4 flex items-center gap-1 rounded-md border border-accent/40 bg-background/70 px-2.5 py-1 font-mono text-xs text-accent backdrop-blur">
                     <Trophy className="h-3 w-3" />
                     {project.badge}
-                  </div>
+                  </span>
                 )}
               </div>
 
               <div className="p-6">
-                <div className="mb-1 flex items-center justify-between">
-                  <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
+                <div className="mb-2 flex items-center justify-between">
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-mono text-xs text-accent/70">{project.index}</span>
+                    <h3 className="font-display text-xl font-semibold tracking-tight">{project.title}</h3>
+                  </div>
                   <div className="flex items-center gap-3">
                     {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                        aria-label={`${project.title} GitHub repository`}
-                      >
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-accent" aria-label={`${project.title} repository`}>
                         <GithubIcon className="h-4 w-4" />
                       </a>
                     )}
                     {project.link && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                        aria-label={`Visit ${project.title}`}
-                      >
+                      <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-accent" aria-label={`Visit ${project.title}`}>
                         <ExternalLink className="h-4 w-4" />
                       </a>
                     )}
                   </div>
                 </div>
-                {project.subtitle && (
-                  <p className="mb-3 text-sm font-medium text-accent">{project.subtitle}</p>
-                )}
-                <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-                  {project.description}
-                </p>
+                {project.subtitle && <p className="mb-3 font-mono text-xs text-muted-foreground">{project.subtitle}</p>}
+                <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {project.tags.map((tag) => (
                     <span key={tag} className="tag-pill">{tag}</span>
@@ -270,23 +332,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section — Narrative style */}
-      <section id="about" className="border-t border-border">
-        {/* Story */}
-        <div className="mx-auto max-w-3xl px-6 pt-24 pb-16">
-          <p className="mb-6 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">About</p>
-          <h2 className="mb-10 text-3xl font-bold leading-snug tracking-tight sm:text-4xl">
-            I believe technology should <span className="font-serif italic font-normal text-muted-foreground">serve people</span> — not the other way around.
+      {/* ── Dossier: about + experience ─────────── */}
+      <section id="dossier" className="border-t border-border">
+        {/* About */}
+        <div className="mx-auto max-w-3xl px-6 pt-28 pb-20">
+          <p className="mono-label mb-6">§ 02 — About</p>
+          <h2 className="mb-12 font-display text-3xl font-semibold leading-[1.15] tracking-tight sm:text-[2.75rem]">
+            I believe technology should <span className="font-serif italic font-normal text-accent">serve people</span> — not the other way around.
           </h2>
-          <div className="space-y-6 text-base leading-[1.8] text-muted-foreground">
+          <div className="space-y-6 text-base leading-[1.85] text-muted-foreground">
             <p>
               Growing up in Antananarivo, Madagascar, I was the kid who took things apart to understand how they worked — radios, old phones, anything I could get my hands on. That curiosity naturally extended to science: physics, astronomy, chemistry. But when I discovered programming, everything clicked. It was the most direct way to turn ideas into something real.
             </p>
             <p>
-              I chose to study at <span className="font-medium text-foreground">HEI (Haute École d&apos;Informatique)</span> where I dove deep into full stack development. But I quickly realized that writing code wasn&apos;t enough — I wanted to design experiences that people actually enjoy using. That&apos;s when I started blending engineering with UI/UX design, and it changed everything about how I approach building software.
+              I chose to study at <span className="text-foreground">HEI (Haute École d&apos;Informatique)</span> where I dove deep into full stack development. But I quickly realized that writing code wasn&apos;t enough — I wanted to design experiences that people actually enjoy using. That&apos;s when I started blending engineering with UI/UX design, and it changed everything about how I approach building software.
             </p>
             <p>
-              Today, I work across the entire stack — from crafting pixel-perfect interfaces in React and Next.js to building robust APIs with Spring Boot. I&apos;m particularly drawn to <span className="font-medium text-foreground">AI-powered tools</span> that augment human capabilities, which led me to build projects like UnFaked (deepfake detection) and NeuraNote (AI-powered note transformation).
+              Today, I work across the entire stack — from crafting pixel-perfect interfaces in React and Next.js to building robust APIs with Spring Boot. I&apos;m particularly drawn to <span className="text-foreground">AI-powered tools</span> that augment human capabilities, which led me to build projects like UnFaked (deepfake detection) and NeuraNote (AI-powered note transformation).
             </p>
             <p>
               I don&apos;t just want to ship features. I want my work to improve people&apos;s daily lives, solve real problems, and maybe even inspire them to build something of their own.
@@ -294,190 +356,171 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Core Values */}
-        <div className="border-t border-border bg-gradient-to-b from-muted/50 to-background">
-          <div className="mx-auto max-w-6xl px-6 py-20">
-            <p className="mb-10 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">What drives me</p>
-            <div className="grid gap-8 sm:grid-cols-3">
-              <div>
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-background text-lg font-bold">1</div>
-                <h3 className="mb-2 text-lg font-semibold">Build with purpose</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">Every project should solve a real problem. I start with the user&apos;s needs — not the technology — and work backwards to find the simplest, most elegant solution.</p>
-              </div>
-              <div>
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-background text-lg font-bold">2</div>
-                <h3 className="mb-2 text-lg font-semibold">Design is engineering</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">Good design isn&apos;t decoration — it&apos;s problem solving. I treat interfaces as systems where every spacing choice, color, and interaction serves a function.</p>
-              </div>
-              <div>
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-background text-lg font-bold">3</div>
-                <h3 className="mb-2 text-lg font-semibold">Never stop learning</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">From hackathons to volunteering, I put myself in positions where I&apos;m challenged. The best growth comes from building things that push you beyond what you already know.</p>
-              </div>
+        {/* Experience log */}
+        <div className="border-t border-border bg-surface/30">
+          <div className="mx-auto max-w-4xl px-6 py-20">
+            <p className="mono-label mb-10">Experience Log</p>
+            <div className="space-y-14">
+              {experience.map((exp) => (
+                <div key={exp.company} className="grid gap-6 md:grid-cols-[1fr_2fr]">
+                  <div>
+                    <p className="font-mono text-xs text-accent">{exp.period}</p>
+                    <h3 className="mt-2 font-display text-xl font-semibold">{exp.role}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{exp.company}</p>
+                    <p className="mt-3 font-mono text-[11px] leading-relaxed text-muted-foreground/70">{exp.stack}</p>
+                  </div>
+                  <div className="space-y-5 border-l border-border pl-6">
+                    {exp.notes.map((note) => (
+                      <div key={note.head}>
+                        <p className="mb-1 flex items-center gap-2 text-sm font-medium">
+                          <span className="text-accent">→</span> {note.head}
+                        </p>
+                        <p className="text-sm leading-relaxed text-muted-foreground">{note.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Experience & Skills */}
+        {/* Stack */}
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="grid gap-16 lg:grid-cols-2">
-            {/* Experience */}
-            <div>
-              <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Experience</p>
-              <h2 className="mb-10 text-3xl font-bold tracking-tight">
-                Where I&apos;ve <span className="font-serif italic font-normal text-muted-foreground">worked</span>
-              </h2>
-              <div className="space-y-6">
-                {experience.map((exp) => (
-                  <div key={exp.company} className="rounded-xl border border-border bg-surface p-6">
-                    <div className="mb-1 flex items-start justify-between">
-                      <h3 className="font-semibold">{exp.role}</h3>
-                      <span className="shrink-0 text-xs text-muted-foreground">{exp.period}</span>
-                    </div>
-                    <p className="mb-4 text-sm font-medium text-accent">{exp.company}</p>
-                    <ul className="space-y-2">
-                      {exp.bullets.map((b, idx) => (
-                        <li key={idx} className="text-sm leading-relaxed text-muted-foreground">
-                          <span className="mr-2 text-muted-foreground/40">—</span>{b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+          <p className="mono-label mb-10">Toolkit</p>
+          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            {Object.entries(skills).map(([category, items]) => (
+              <div key={category} className="border-t border-border pt-4">
+                <p className="mb-3 font-mono text-xs uppercase tracking-widest text-accent/70">{category}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {items.map((skill) => (
+                    <span key={skill} className="tag-pill">{skill}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-
-            {/* Skills */}
-            <div>
-              <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Toolkit</p>
-              <h2 className="mb-10 text-3xl font-bold tracking-tight">
-                What I <span className="font-serif italic font-normal text-muted-foreground">use</span>
-              </h2>
-              <div className="space-y-5">
-                {Object.entries(skills).map(([category, items]) => (
-                  <div key={category}>
-                    <p className="mb-2.5 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">{category}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {items.map((skill) => (
-                        <span
-                          key={skill}
-                          className="rounded-full border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-surface-hover"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
+        </div>
 
-          {/* Education */}
-          <div className="mt-20">
-            <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">Education</p>
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="font-semibold">HEI Madagascar</p>
-                <p className="mt-1 text-sm text-muted-foreground">Licence 2 — Software Ecosystem · 2024–2025</p>
+        {/* Achievements */}
+        <div className="mx-auto max-w-6xl px-6 pb-8">
+          <p className="mono-label mb-6">Recognition</p>
+          <div className="space-y-3">
+            {achievements.map((a) =>
+              a.featured ? (
+                <a key={a.title} href={a.href} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between gap-4 rounded-xl border border-accent/40 bg-accent-soft p-6 transition-colors hover:bg-accent/15">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-accent text-background">
+                      <Trophy className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="font-display text-lg font-semibold">{a.title}</p>
+                      <p className="mt-0.5 font-mono text-xs text-muted-foreground">{a.event}</p>
+                    </div>
+                  </div>
+                  <span className="hidden shrink-0 items-center gap-1 font-mono text-xs text-accent sm:inline-flex">
+                    View certificate <ExternalLink className="h-3.5 w-3.5" />
+                  </span>
+                </a>
+              ) : (
+                <div key={a.title} className="flex items-center gap-4 rounded-xl border border-border bg-surface p-5">
+                  <Trophy className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">{a.title}</p>
+                    <p className="mt-0.5 font-mono text-xs text-muted-foreground">{a.event}</p>
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+
+        {/* Education */}
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <p className="mono-label mb-6">Education</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {education.map((e) => (
+              <div key={e.detail} className="rounded-xl border border-border bg-surface p-5">
+                <div className="mb-2 flex items-center gap-2">
+                  <p className="font-display font-semibold">{e.school}</p>
+                  {e.current && <span className="rounded-md bg-accent-soft px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-accent">Now</span>}
+                </div>
+                <p className="text-sm text-muted-foreground">{e.detail}</p>
+                <p className="mt-1 font-mono text-xs text-muted-foreground/60">{e.years}</p>
+                {e.sub && <p className="mt-2 text-xs text-muted-foreground/70">{e.sub}</p>}
               </div>
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="font-semibold">HEI Madagascar</p>
-                <p className="mt-1 text-sm text-muted-foreground">Licence 1 — Computer Science · 2023–2024</p>
-              </div>
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="font-semibold">God&apos;s Titan School</p>
-                <p className="mt-1 text-sm text-muted-foreground">Scientific Baccalaureate (Series D) · 2023</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* And? Section */}
-      <section id="and" className="border-t border-border">
-        <div className="mx-auto max-w-3xl px-6 pt-24 pb-10">
-          <p className="mb-6 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">And?</p>
-          <h2 className="mb-6 text-3xl font-bold leading-snug tracking-tight sm:text-4xl">
-            When I&apos;m not <span className="font-serif italic font-normal text-muted-foreground">coding</span>
+      {/* ── Beyond ──────────────────────────────── */}
+      <section id="beyond" className="border-t border-border">
+        <div className="mx-auto max-w-3xl px-6 pt-28 pb-14">
+          <p className="mono-label mb-6">§ 03 — Beyond the terminal</p>
+          <h2 className="mb-6 font-display text-3xl font-semibold leading-snug tracking-tight sm:text-4xl">
+            What I do when I&apos;m <span className="font-serif italic font-normal text-accent">not shipping</span>
           </h2>
-          <p className="text-base leading-[1.8] text-muted-foreground">
-            I&apos;m a firm believer that what you do outside of work shapes who you are inside it. Here&apos;s what fuels me beyond the keyboard.
+          <p className="text-base leading-[1.85] text-muted-foreground">
+            What you do off the clock shapes how you show up on it. Here&apos;s what fuels the rest.
           </p>
         </div>
 
-        <div className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="mx-auto max-w-6xl px-6 pb-28">
           {/* Basketball */}
-          <div className="mb-16 grid items-center gap-10 lg:grid-cols-5">
-            <div className="lg:col-span-3">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-orange-700">
-                <span>🏀</span> Competitive Basketball
-              </div>
-              <h3 className="mb-4 text-2xl font-bold tracking-tight">DBC — Division 2 Player</h3>
-              <p className="mb-4 text-sm leading-[1.8] text-muted-foreground">
-                Basketball isn&apos;t just a hobby — it&apos;s a discipline. I train 3 times a week, 10 hours total, splitting between weight room sessions for physical conditioning and on-court drills to sharpen my technique. Playing at the competitive level in Division 2 with DBC has taught me about teamwork, resilience, and performing under pressure — skills that translate directly into how I approach engineering challenges.
+          <div className="mb-6 grid items-stretch gap-6 lg:grid-cols-5">
+            <div className="lg:col-span-3 rounded-2xl border border-border bg-surface p-8">
+              <p className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">🏀 Competitive Basketball</p>
+              <h3 className="mb-4 font-display text-2xl font-semibold tracking-tight">DBC — Division 2</h3>
+              <p className="text-sm leading-[1.85] text-muted-foreground">
+                Not a hobby, a discipline. Three sessions a week, ~10 hours split between the weight room and on-court drills. Division 2 with DBC taught me teamwork, resilience, and performing under pressure — the same things that decide whether code holds up when it matters.
               </p>
             </div>
-            <div className="flex items-center justify-center lg:col-span-2">
-              <div className="flex h-48 w-full items-center justify-center rounded-2xl bg-gradient-to-br from-orange-100 to-amber-50 text-6xl">
-                🏀
-              </div>
+            <div className="lg:col-span-2 flex items-center justify-center rounded-2xl border border-border bg-gradient-to-br from-accent-soft to-transparent text-7xl">
+              🏀
             </div>
           </div>
 
-          {/* MIT Goal */}
-          <div className="mb-16 grid items-center gap-10 lg:grid-cols-5">
-            <div className="flex items-center justify-center lg:col-span-2 lg:order-first">
-              <div className="flex h-48 w-full items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-50 text-6xl">
-                🎓
-              </div>
+          {/* MIT */}
+          <div className="mb-6 grid items-stretch gap-6 lg:grid-cols-5">
+            <div className="lg:col-span-2 flex items-center justify-center rounded-2xl border border-border bg-surface text-7xl lg:order-first">
+              🎓
             </div>
-            <div className="lg:col-span-3">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700">
-                <span>🌍</span> Languages & Ambition
-              </div>
-              <h3 className="mb-4 text-2xl font-bold tracking-tight">On the road to MIT</h3>
-              <p className="mb-4 text-sm leading-[1.8] text-muted-foreground">
-                I&apos;m actively learning English and Latin — because broadening how you communicate broadens how you think. I&apos;ve reached a score of 115 on Duolingo in English, and I&apos;m putting every effort into making my profile strong enough to apply to MIT for a Master&apos;s degree. It&apos;s ambitious, but that&apos;s exactly the point.
+            <div className="lg:col-span-3 rounded-2xl border border-border bg-surface p-8">
+              <p className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">🌍 Languages &amp; Ambition</p>
+              <h3 className="mb-4 font-display text-2xl font-semibold tracking-tight">On the road to MIT</h3>
+              <p className="text-sm leading-[1.85] text-muted-foreground">
+                Actively learning English and Latin — broadening how you communicate broadens how you think. Hit a 115 streak on Duolingo in English, and building a profile strong enough to apply to MIT for a Master&apos;s. Ambitious on purpose.
               </p>
             </div>
           </div>
 
-          {/* Anime, Manga, Games & Books */}
-          <div className="mb-8">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-700">
-              <span>🎬</span> Culture & Stories
-            </div>
-            <h3 className="mb-6 text-2xl font-bold tracking-tight">The stories that shaped me</h3>
-            <p className="mb-8 max-w-2xl text-sm leading-[1.8] text-muted-foreground">
-              I&apos;m deeply into anime, manga, video games, and books. Stories about perseverance, identity, and pushing past limits resonate with how I see my own journey.
+          {/* Culture */}
+          <div className="rounded-2xl border border-border bg-surface p-8">
+            <p className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">🎬 Culture &amp; Stories</p>
+            <h3 className="mb-6 font-display text-2xl font-semibold tracking-tight">The stories that shaped me</h3>
+            <p className="mb-8 max-w-2xl text-sm leading-[1.85] text-muted-foreground">
+              Deep into anime, manga, games and books — stories about perseverance, identity, and pushing past limits. They read a lot like the way I see my own run.
             </p>
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {/* Anime */}
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">Favorite Anime</p>
-                <ul className="space-y-2">
-                  <li className="text-sm font-medium">Vinland Saga</li>
-                  <li className="text-sm font-medium">Tokyo Ghoul</li>
-                  <li className="text-sm font-medium">Kuroko no Basket</li>
+            <div className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
+              <div className="bg-surface p-5">
+                <p className="mb-3 font-mono text-[11px] uppercase tracking-widest text-muted-foreground/60">Anime</p>
+                <ul className="space-y-2 text-sm">
+                  <li>Vinland Saga</li><li>Tokyo Ghoul</li><li>Kuroko no Basket</li>
                 </ul>
               </div>
-              {/* Films */}
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">Favorite Films</p>
-                <ul className="space-y-2">
-                  <li className="text-sm font-medium">Hereditary</li>
-                  <li className="text-sm font-medium">Midsommar</li>
+              <div className="bg-surface p-5">
+                <p className="mb-3 font-mono text-[11px] uppercase tracking-widest text-muted-foreground/60">Films</p>
+                <ul className="space-y-2 text-sm">
+                  <li>Hereditary</li><li>Midsommar</li>
                 </ul>
               </div>
-              {/* Books */}
-              <div className="rounded-xl border border-border bg-surface p-5">
-                <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground/60">Favorite Books</p>
-                <ul className="space-y-2">
-                  <li className="text-sm font-medium">The Prey of Shadows <span className="text-muted-foreground font-normal">— John Connolly</span></li>
-                  <li className="text-sm font-medium">Inferno <span className="text-muted-foreground font-normal">— Dan Brown</span></li>
-                  <li className="text-sm font-medium">Doom</li>
+              <div className="bg-surface p-5">
+                <p className="mb-3 font-mono text-[11px] uppercase tracking-widest text-muted-foreground/60">Books</p>
+                <ul className="space-y-2 text-sm">
+                  <li>The Prey of Shadows <span className="text-muted-foreground">— Connolly</span></li>
+                  <li>Inferno <span className="text-muted-foreground">— Dan Brown</span></li>
+                  <li>Doom</li>
                 </ul>
               </div>
             </div>
@@ -485,23 +528,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border bg-muted">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 py-12 sm:flex-row">
-          <div>
-            <p className="text-sm font-semibold">Tiavintsoa Andriamamivony</p>
-            <p className="mt-1 text-xs text-muted-foreground">© {new Date().getFullYear()} · All rights reserved</p>
+      {/* ── CTA + Footer ────────────────────────── */}
+      <footer className="border-t border-border bg-surface/30">
+        <div className="mx-auto max-w-6xl px-6 py-24 text-center">
+          <p className="mono-label mb-6">Let&apos;s build</p>
+          <h2 className="mx-auto max-w-2xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
+            Got something that <span className="font-serif italic font-normal text-accent">has to work?</span>
+          </h2>
+          <a href="mailto:tiavina.andriamamivony.pro@gmail.com" className="mt-10 inline-flex h-12 items-center gap-2 rounded-md bg-accent px-8 text-sm font-medium text-background transition-transform hover:scale-[1.03]">
+            <Mail className="h-4 w-4" /> tiavina.andriamamivony.pro@gmail.com
+          </a>
+          <div className="mt-6 flex items-center justify-center gap-6 font-mono text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5" /> Antananarivo, MG</span>
+            <span className="flex items-center gap-1.5"><Phone className="h-3.5 w-3.5" /> +261 32 64 197 54</span>
           </div>
+        </div>
+
+        <div className="rule-ticks" />
+
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
+          <p className="font-mono text-xs text-muted-foreground">© {new Date().getFullYear()} Tiavintsoa Andriamamivony</p>
           <div className="flex items-center gap-5">
-            <a href="mailto:tiavina.andriamamivony.pro@gmail.com" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="Email">
-              <Mail className="h-5 w-5" />
-            </a>
-            <a href="https://github.com/Tiavina-Andriamamivony" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="GitHub">
-              <GithubIcon className="h-5 w-5" />
-            </a>
-            <a href="https://www.linkedin.com/in/tiavintsoa-ulrich-andriamamivony-624673366/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-foreground" aria-label="LinkedIn">
-              <LinkedinIcon className="h-5 w-5" />
-            </a>
+            <a href="mailto:tiavina.andriamamivony.pro@gmail.com" className="text-muted-foreground transition-colors hover:text-accent" aria-label="Email"><Mail className="h-4 w-4" /></a>
+            <a href="https://github.com/Tiavina-Andriamamivony" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-accent" aria-label="GitHub"><GithubIcon className="h-4 w-4" /></a>
+            <a href="https://www.linkedin.com/in/tiavintsoa-ulrich-andriamamivony-624673366/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-accent" aria-label="LinkedIn"><LinkedinIcon className="h-4 w-4" /></a>
           </div>
         </div>
       </footer>
