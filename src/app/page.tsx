@@ -1,12 +1,41 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Mail, MapPin, ArrowUpRight, ChevronDown, Phone, Trophy, ExternalLink } from "lucide-react";
+import { Mail, MapPin, ArrowUpRight, ChevronDown, Phone, Trophy, ExternalLink, Menu, Route, X } from "lucide-react";
 import { RetroGrid } from "@/components/ui/retro-grid";
 import { KineticText } from "@/components/ui/kinetic-text";
 import { Marquee } from "@/components/ui/marquee";
 
-const projects = [
+type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  year: string;
+  subtitle?: string;
+  image?: string;
+  badge?: string;
+  link?: string;
+  github?: string;
+  repos?: { href: string; label: string }[];
+};
+
+const projects: Project[] = [
   {
-    index: "01",
+    title: "Predicta",
+    description:
+      "Real-time traffic for Antananarivo, built end to end from my own studio. A React map that streams live congestion — every road colored by its current speed — over a Java API that decodes Mapbox vector tiles into road-level GeoJSON on the fly and serves it from a single AWS Lambda. Traffic is never stored.",
+    tags: ["Next.js", "React", "Spring Boot", "AWS Lambda", "Mapbox"],
+    year: "2026",
+    image: "/predicta.png",
+    subtitle: "Flagship product · Yuta Corp",
+    link: "https://predicta-ui.vercel.app/",
+    repos: [
+      { href: "https://github.com/yuta-corp/predicta-ui", label: "Frontend" },
+      { href: "https://github.com/Tiavina-Andriamamivony/predictaapi", label: "Traffic API" },
+    ],
+  },
+  {
     title: "UnFaked",
     description:
       "Misinformation-detection platform. Wired the Google Fact Check API for real-time claim verification and ran on-device image analysis (TensorFlow + COCO) to flag manipulated media. Shipped the full flow, from capture to verdict.",
@@ -18,7 +47,6 @@ const projects = [
     github: "https://github.com/Tiavina-Andriamamivony/UnFaked",
   },
   {
-    index: "02",
     title: "NeuraNote",
     description:
       "AI notebook that turns raw, messy notes into structured knowledge — summarize, rewrite, restructure. Built the model plumbing and a deliberately minimal capture-first interface.",
@@ -29,7 +57,6 @@ const projects = [
     github: "https://github.com/Tiavina-Andriamamivony/NeuraNote",
   },
   {
-    index: "03",
     title: "Ilona",
     description:
       "Voice-first call-center agent. Speech synthesis over multi-turn conversation flows so the assistant handles customer interactions end to end, not just single prompts.",
@@ -41,7 +68,6 @@ const projects = [
     github: "https://github.com/Tiavina-Andriamamivony/Ilona-perfect-call-agent",
   },
   {
-    index: "04",
     title: "Face-Me",
     description:
       "Facial-recognition tool running detection and feature analysis directly in the browser, behind a UI that stays out of the way. TensorFlow in the client, no round-trip to a server.",
@@ -67,12 +93,40 @@ const skills = {
   Data: ["PostgreSQL", "JPA / Hibernate", "Flyway", "Prisma"],
   Practices: ["TDD", "CI/CD", "Docker", "Code Review", "Git"],
   "AI / CV": ["TensorFlow", "Computer Vision", "Ollama", "ElevenLabs"],
+  "AI Coding": ["Claude Code", "Codex", "Gemini CLI", "Freebuff"],
 };
 
-const experience = [
+type Experience = {
+  role: string;
+  company: string;
+  period: string;
+  stack: string;
+  link?: string;
+  notes: { head: string; body: string }[];
+};
+
+const experience: Experience[] = [
+  {
+    role: "Founder & Software Engineer",
+    company: "Yuta Corp",
+    link: "https://yuta-corp-mg.vercel.app/",
+    period: "2026 — Present",
+    stack: "Next.js · React Native · Spring Boot · PostgreSQL · AWS",
+    notes: [
+      {
+        head: "The studio",
+        body: "Founded Yuta Corp to design, build and ship products I own end to end — from React web apps and React Native mobile to Spring backends on AWS. Yuta is the home of Predicta, the live Antananarivo traffic platform, and LAZA.",
+      },
+      {
+        head: "Run like a business",
+        body: "Entrepreneurship, not just engineering: client projects keep the studio funded while I build and work to monetize my own SaaS. Predicta is the first real attempt — a live product with a key-gated traffic API for developers, built to earn, not just to impress.",
+      },
+    ],
+  },
   {
     role: "Backend Developer — Apprenticeship",
     company: "Numer Madagascar",
+    link: "https://www.numer.tech/",
     period: "Sep 2025 — Apr 2026",
     stack: "Java · Spring Boot · PostgreSQL · AWS · Docker",
     notes: [
@@ -93,6 +147,7 @@ const experience = [
   {
     role: "Full-Stack Developer — Consultant",
     company: "MA-ERI Consulting",
+    link: "https://ma-eri.vercel.app/",
     period: "Mar 2025 — Present",
     stack: "Next.js · Resend · Vercel",
     notes: [
@@ -155,6 +210,24 @@ function LinkedinIcon({ className }: { className?: string }) {
 }
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    const mq = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = (e: MediaQueryListEvent) => {
+      if (e.matches) setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    mq.addEventListener("change", closeOnDesktop);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", closeOnDesktop);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* ── Nav ─────────────────────────────────── */}
@@ -163,7 +236,9 @@ export default function Home() {
           <a href="#" className="flex items-center gap-3">
             <span className="font-mono text-sm font-medium tracking-tight">T.ANDRIAMAMIVONY</span>
           </a>
-          <div className="flex items-center gap-7">
+
+          {/* Desktop nav */}
+          <div className="hidden items-center gap-7 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -174,7 +249,37 @@ export default function Home() {
               </a>
             ))}
           </div>
+
+          {/* Mobile burger */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-surface/60 text-foreground transition-colors hover:border-accent/40 hover:text-accent md:hidden"
+          >
+            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
+
+        {/* Mobile menu */}
+        {menuOpen && (
+          <div id="mobile-menu" className="md:hidden">
+            <div className="mx-auto max-w-6xl px-6 py-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="nav-link block border-b border-border/60 py-3.5 font-mono text-sm uppercase tracking-widest text-muted-foreground transition-colors hover:text-foreground last:border-b-0"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* ── Hero ────────────────────────────────── */}
@@ -278,16 +383,23 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {projects.map((project) => (
+          {projects.map((project, i) => (
             <article key={project.title} className="project-card group overflow-hidden rounded-xl border border-border bg-surface">
               <div className="relative overflow-hidden">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  width={600}
-                  height={340}
-                  className="h-60 w-full object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
-                />
+                {project.image ? (
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={600}
+                    height={340}
+                    className="h-60 w-full object-cover object-top opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                  />
+                ) : (
+                  <div className="flex h-60 w-full items-center justify-center overflow-hidden bg-surface bg-[radial-gradient(130%_120%_at_15%_0%,rgba(143,36,13,0.16),transparent_60%)]">
+                    <span className="absolute select-none font-display text-[10rem] font-semibold leading-none tracking-tight text-accent/10">P</span>
+                    <Route className="relative h-16 w-16 text-accent/50" strokeWidth={1.5} />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
                 <span className="absolute right-4 top-4 rounded-md bg-background/70 px-2.5 py-1 font-mono text-xs text-muted-foreground backdrop-blur">
                   {project.year}
@@ -303,15 +415,25 @@ export default function Home() {
               <div className="p-6">
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex items-baseline gap-3">
-                    <span className="font-mono text-xs text-accent/70">{project.index}</span>
+                    <span className="font-mono text-xs text-accent/70">{String(i + 1).padStart(2, "0")}</span>
                     <h3 className="font-display text-xl font-semibold tracking-tight">{project.title}</h3>
                   </div>
                   <div className="flex items-center gap-3">
-                    {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-accent" aria-label={`${project.title} repository`}>
+                    {(project.repos ??
+                      (project.github
+                        ? [{ href: project.github, label: project.title }]
+                        : [])).map((repo) => (
+                      <a
+                        key={repo.href}
+                        href={repo.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground transition-colors hover:text-accent"
+                        aria-label={`${project.title} — ${repo.label} repository`}
+                      >
                         <GithubIcon className="h-4 w-4" />
                       </a>
-                    )}
+                    ))}
                     {project.link && (
                       <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-accent" aria-label={`Visit ${project.title}`}>
                         <ExternalLink className="h-4 w-4" />
@@ -348,7 +470,15 @@ export default function Home() {
               I chose to study at <span className="text-foreground">HEI (Haute École d&apos;Informatique)</span> where I dove deep into full stack development. But I quickly realized that writing code wasn&apos;t enough — I wanted to design experiences that people actually enjoy using. That&apos;s when I started blending engineering with UI/UX design, and it changed everything about how I approach building software.
             </p>
             <p>
-              Today, I work across the entire stack — from crafting pixel-perfect interfaces in React and Next.js to building robust APIs with Spring Boot. I&apos;m particularly drawn to <span className="text-foreground">AI-powered tools</span> that augment human capabilities, which led me to build projects like UnFaked (deepfake detection) and NeuraNote (AI-powered note transformation).
+              Today, I&apos;m the founder of{" "}
+              <a href="https://yuta-corp-mg.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-foreground underline decoration-accent/40 underline-offset-4 transition-colors hover:text-accent">
+                Yuta Corp
+              </a>
+              , a studio I launched in Antananarivo to build products I own end to end — most recently{" "}
+              <a href="https://predicta-ui.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-foreground underline decoration-accent/40 underline-offset-4 transition-colors hover:text-accent">
+                Predicta
+              </a>
+              , live road-traffic for the city. Beyond that I work across the entire stack, from pixel-perfect interfaces in React and Next.js to robust APIs in Spring Boot, and I&apos;m particularly drawn to <span className="text-foreground">AI-powered tools</span> that augment human capabilities — like UnFaked (deepfake detection) and NeuraNote (AI-powered note transformation).
             </p>
             <p>
               I don&apos;t just want to ship features. I want my work to improve people&apos;s daily lives, solve real problems, and maybe even inspire them to build something of their own.
@@ -366,7 +496,19 @@ export default function Home() {
                   <div>
                     <p className="font-mono text-xs text-accent">{exp.period}</p>
                     <h3 className="mt-2 font-display text-xl font-semibold">{exp.role}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{exp.company}</p>
+                    {exp.link ? (
+                      <a
+                        href={exp.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/company mt-1 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-accent"
+                      >
+                        {exp.company}
+                        <ArrowUpRight className="h-3 w-3 transition-transform group-hover/company:translate-x-0.5 group-hover/company:-translate-y-0.5" />
+                      </a>
+                    ) : (
+                      <p className="mt-1 text-sm text-muted-foreground">{exp.company}</p>
+                    )}
                     <p className="mt-3 font-mono text-[11px] leading-relaxed text-muted-foreground/70">{exp.stack}</p>
                   </div>
                   <div className="space-y-5 border-l border-border pl-6">

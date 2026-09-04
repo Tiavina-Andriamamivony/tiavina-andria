@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Tiavintsoa Andriamamivony — Backend & Full-Stack Engineer",
   description:
-    "Backend and full-stack engineer in Madagascar. Ships production payment infrastructure in Java/Spring Boot and builds AI-powered web apps. Best team in Madagascar — picoCTF 2026 (CMU Africa).",
+    "Backend and full-stack engineer in Madagascar. Founder of Yuta Corp and creator of Predicta, a real-time traffic platform for Antananarivo. Ships production payment infrastructure in Java/Spring Boot. Best team in Madagascar — picoCTF 2026 (CMU Africa).",
 };
 
 export default function RootLayout({
